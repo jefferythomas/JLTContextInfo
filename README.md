@@ -6,7 +6,7 @@ NSObject).
 ##Basic Use
 
 Unlike lots of Objective-C old schoolers, I really like dot-property and
-subscripted key syntax. Here I'll save a little extra data to `object`.
+subscripted key syntax. Here I'll save a little extra data to object.
 
     object.JLT_contextInfo[@"extra"] = data;
 
@@ -19,9 +19,36 @@ off the `JLT_` part.
 
     object.contextInfo[@"extra"] = data;
 
+##Improving UIAlertView
+
+There have been a couple of times when having some context info has cut down on
+the number of properties I've needed to store in my view controllers. Here I can
+change the text of any button to magic without having to save it out as it's
+own separate property.
+
+    - (IBAction)buttonTextToMagic:(UIButton *)button
+    {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Make Magic"
+                                                            message:@"Do you want to make the button title \"Magic\"?"
+                                                           delegate:self
+                                                  cancelButtonTitle:@"NO"
+                                                  otherButtonTitles:@"YES", nil];
+
+        alertView.contextInfo[@"button"] = button;
+        [alertView show];
+    }
+
+    - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+    {
+        if (buttonIndex != alertView.cancelButtonIndex) {
+            UIButton *button = alertView.contextInfo[@"button"];
+            [button setTitle:@"Magic" forState:UIControlStateNormal];
+        }
+    }
+
 ##Unit Tests for JLTContextInfo
 
-`JLTContextInfo` passes all the following unit tests.
+JLTContextInfo passes the following unit tests.
 
     - (void)testContextInfo
     {
