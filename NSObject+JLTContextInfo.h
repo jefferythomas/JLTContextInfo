@@ -14,14 +14,34 @@
 //  THE SOFTWARE.
 //
 
+#if defined (JLT_CONTEXT_INFO_ATOMIC)
+#define JLT_CONTEXT_INFO___ATOMIC___ atomic
+#else
+#define JLT_CONTEXT_INFO___ATOMIC___ nonatomic
+#endif
+
 #import <Foundation/Foundation.h>
 
 @interface NSObject (JLTContextInfo)
 
-- (NSMutableDictionary *)JLT_contextInfo;
+///
+/// @brief A mutable dictionary which can contain any additional data an object may need. (read-only)
+///
+/// By default @c JLT_contextInfo is @c nonatomic. Define @c JLT_CONTEXT_INFO_ATOMIC to make
+/// @c JLT_contextInfo @c atomic.
+///
+/// Define @c JLT_SHORTHAND to create the property contextInfo.
+///
+@property (JLT_CONTEXT_INFO___ATOMIC___, readonly) NSMutableDictionary *JLT_contextInfo;
 
-#if defined(JLT_SHORTHAND)
-- (NSMutableDictionary *)contextInfo;
+#if defined (JLT_SHORTHAND)
+///
+/// @brief A mutable dictionary which can contain any additional data an object may need. (read-only)
+///
+/// This is a shorthand alias for @c JLT_contextInfo. Either property will return the same
+/// dictionary.
+///
+@property (JLT_CONTEXT_INFO___ATOMIC___, readonly) NSMutableDictionary *contextInfo;
 #endif
 
 @end

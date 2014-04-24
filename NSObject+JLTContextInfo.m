@@ -21,21 +21,26 @@
 
 - (NSMutableDictionary *)JLT_contextInfo
 {
-    static char key;
-    NSMutableDictionary *contextInfo = objc_getAssociatedObject(self, &key);
-    if (!contextInfo) {
-        contextInfo = [NSMutableDictionary dictionary];
-        objc_setAssociatedObject(self, &key, contextInfo, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+#if defined (JLT_CONTEXT_INFO_ATOMIC)
+    @synchronized(self) {
+#endif
+        static char key;
+        NSMutableDictionary *contextInfo = objc_getAssociatedObject(self, &key);
+        if (!contextInfo) {
+            contextInfo = [NSMutableDictionary dictionary];
+            objc_setAssociatedObject(self, &key, contextInfo, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        }
+        return contextInfo;
+#if defined(JLT_CONTEXT_INFO_ATOMIC)
     }
-    return contextInfo;
+#endif
 }
 
-#if defined(JLT_SHORTHAND)
+#if defined (JLT_SHORTHAND)
 - (NSMutableDictionary *)contextInfo
 {
-    return [self JLT_contextInfo];
+    return self.JLT_contextInfo;
 }
 #endif
-
 
 @end
