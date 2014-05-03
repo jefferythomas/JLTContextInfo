@@ -25,7 +25,7 @@
 @interface NSObject (JLTContextInfo)
 
 ///
-/// @brief A mutable dictionary which can contain any additional data an object may need. (read-only)
+/// @brief A mutable dictionary which can contain any additional data an object may need.
 ///
 /// By default @c JLT_contextInfo is @c nonatomic. Define @c JLT_CONTEXT_INFO_ATOMIC to make
 /// @c JLT_contextInfo @c atomic.
@@ -36,7 +36,7 @@
 
 #if defined (JLT_SHORTHAND)
 ///
-/// @brief A mutable dictionary which can contain any additional data an object may need. (read-only)
+/// @brief A mutable dictionary which can contain any additional data an object may need.
 ///
 /// This is a shorthand alias for @c JLT_contextInfo. Either property will return the same
 /// dictionary.
