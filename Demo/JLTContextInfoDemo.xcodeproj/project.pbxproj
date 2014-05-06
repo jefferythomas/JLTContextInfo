@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7B412C9F1919908800116D64 /* JLTTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B412C9E1919908800116D64 /* JLTTableViewController.m */; };
 		7BA1645716E9762400B8610A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BA1645616E9762400B8610A /* UIKit.framework */; };
 		7BA1645916E9762400B8610A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BA1645816E9762400B8610A /* Foundation.framework */; };
 		7BA1645B16E9762400B8610A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BA1645A16E9762400B8610A /* CoreGraphics.framework */; };
@@ -36,6 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7B412C9D1919908800116D64 /* JLTTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JLTTableViewController.h; sourceTree = "<group>"; };
+		7B412C9E1919908800116D64 /* JLTTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JLTTableViewController.m; sourceTree = "<group>"; };
 		7BA1645316E9762400B8610A /* JLTContextInfoDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JLTContextInfoDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BA1645616E9762400B8610A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		7BA1645816E9762400B8610A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -123,6 +126,8 @@
 				7BA1646E16E9762400B8610A /* MainStoryboard.storyboard */,
 				7BA1647116E9762400B8610A /* JLTViewController.h */,
 				7BA1647216E9762400B8610A /* JLTViewController.m */,
+				7B412C9D1919908800116D64 /* JLTTableViewController.h */,
+				7B412C9E1919908800116D64 /* JLTTableViewController.m */,
 				7BA1645D16E9762400B8610A /* Supporting Files */,
 			);
 			path = JLTContextInfoDemo;
@@ -273,6 +278,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B412C9F1919908800116D64 /* JLTTableViewController.m in Sources */,
 				7BA1646316E9762400B8610A /* main.m in Sources */,
 				7BA1646716E9762400B8610A /* JLTAppDelegate.m in Sources */,
 				7BABBA2419147789005174B4 /* NSObject+JLTContextInfo.m in Sources */,
