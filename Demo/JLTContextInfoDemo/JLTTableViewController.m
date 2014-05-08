@@ -9,7 +9,49 @@
 #import "JLTTableViewController.h"
 #import "NSObject+JLTContextInfo.h"
 
+@interface JLTDemoModel : NSObject
+
+@property (nonatomic) NSString *text;
++ (instancetype)newWithText:(NSString *)text;
+@end
+
+@interface JLTDemoModel (JLTExpandable)
+@property (nonatomic, getter = isExpanded) BOOL expanded;
+@end
+
+@implementation JLTDemoModel (JLTExpandable)
+- (BOOL)isExpanded
+{
+    return [self.contextInfo[@"isExpanded"] boolValue];
+}
+- (void)setExpanded:(BOOL)expanded
+{
+    if (expanded)
+        self.contextInfo[@"isExpanded"] = @YES;
+    else
+        [self.contextInfo removeObjectForKey:@"isExpanded"];
+}
+@end
+
 @implementation JLTTableViewController
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    JLTDemoModel *datum = self.data[indexPath.row];
+
+    return datum.expanded ? 88.0 : 44.0;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    JLTDemoModel *datum = self.data[indexPath.row];
+
+    datum.expanded = !datum.expanded;
+
+    [tableView beginUpdates];
+    [tableView endUpdates];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -19,33 +61,38 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-    cell.textLabel.text = self.data[indexPath.row];
+    JLTDemoModel *datum = self.data[indexPath.row];
+
+    cell.textLabel.text = datum.text;
+
     return cell;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSObject *datum = self.data[indexPath.row];
-
-    return [datum.contextInfo[@"isExpanded"] boolValue] ? 88.0 : 44.0;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSObject *datum = self.data[indexPath.row];
-
-    BOOL isExpanded = [datum.contextInfo[@"isExpanded"] boolValue];
-    datum.contextInfo[@"isExpanded"] = !isExpanded ? @YES : @NO;
-
-    [tableView beginUpdates];
-    [tableView endUpdates];
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (NSArray *)data
 {
-    if (!_data) _data = @[@"1", @"2", @"3", @"4", @"5"];
+    if (!_data)
+        _data = @[[JLTDemoModel newWithText:@"1"],
+                  [JLTDemoModel newWithText:@"2"],
+                  [JLTDemoModel newWithText:@"3"],
+                  [JLTDemoModel newWithText:@"4"],
+                  [JLTDemoModel newWithText:@"5"]];
     return _data;
 }
 
+@end
+
+@implementation JLTDemoModel
++ (instancetype)newWithText:(NSString *)text
+{
+    return [[self alloc] initWithText:text];
+}
+
+- (instancetype)initWithText:(NSString *)text
+{
+    self = [super init];
+    if (self != nil) {
+        _text = text;
+    }
+    return self;
+}
 @end
