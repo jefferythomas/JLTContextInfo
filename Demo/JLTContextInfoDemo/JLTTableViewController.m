@@ -19,21 +19,22 @@
 @property (nonatomic, getter = isExpanded) BOOL expanded;
 @end
 
-@implementation JLTDemoModel (JLTExpandable)
-- (BOOL)isExpanded
-{
-    return [self.contextInfo[@"isExpanded"] boolValue];
-}
-- (void)setExpanded:(BOOL)expanded
-{
-    if (expanded)
-        self.contextInfo[@"isExpanded"] = @YES;
-    else
-        [self.contextInfo removeObjectForKey:@"isExpanded"];
-}
-@end
-
 @implementation JLTTableViewController
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [self.data count];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    JLTDemoModel *datum = self.data[indexPath.row];
+
+    cell.textLabel.text = datum.text;
+
+    return cell;
+}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -51,21 +52,6 @@
     [tableView beginUpdates];
     [tableView endUpdates];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return [self.data count];
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-    JLTDemoModel *datum = self.data[indexPath.row];
-
-    cell.textLabel.text = datum.text;
-
-    return cell;
 }
 
 - (NSArray *)data
@@ -94,5 +80,19 @@
         _text = text;
     }
     return self;
+}
+@end
+
+@implementation JLTDemoModel (JLTExpandable)
+- (BOOL)isExpanded
+{
+    return [self.contextInfo[@"isExpanded"] boolValue];
+}
+- (void)setExpanded:(BOOL)expanded
+{
+    if (expanded)
+        self.contextInfo[@"isExpanded"] = @YES;
+    else
+        [self.contextInfo removeObjectForKey:@"isExpanded"];
 }
 @end
