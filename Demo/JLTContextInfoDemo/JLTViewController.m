@@ -9,7 +9,7 @@
 #import "JLTViewController.h"
 #import "NSObject+JLTContextInfo.h"
 
-#if !defined(JLT_SHORTHAND)
+#if defined(JLT_PREFIX_CATEGORIES)
 #define contextInfo JLT_contextInfo
 #endif
 

@@ -9,61 +9,62 @@
 #import "JLTContextInfoTests.h"
 #import "NSObject+JLTContextInfo.h"
 
+#if defined(JLT_PREFIX_CATEGORIES)
+#define contextInfo JLT_contextInfo
+#endif
+
 @implementation JLTContextInfoTests
 
-- (void)testContextInfo
+- (void)testContextInfoAsMethod
 {
-    NSObject *object = [[NSObject alloc] init];
-    NSMutableDictionary *contextInfo = [object JLT_contextInfo];
-    XCTAssertNotNil(contextInfo);
-    XCTAssertTrue([contextInfo isKindOfClass:[NSMutableDictionary class]]);
-}
-
-#if defined(JLT_SHORTHAND)
-- (void)testContextInfoShorthand
-{
-    NSObject *object = [[NSObject alloc] init];
+    NSObject *object = [NSObject new];
     NSMutableDictionary *contextInfo = [object contextInfo];
     XCTAssertNotNil(contextInfo);
     XCTAssertTrue([contextInfo isKindOfClass:[NSMutableDictionary class]]);
 }
-#endif
 
-- (void)testContextInfoSaveString
+- (void)testContextInfoWithObjectForKey
 {
-    NSObject *object = [[NSObject alloc] init];
-    [[object JLT_contextInfo] setObject:@"Test String" forKey:@"saved"];
+    NSObject *object = [NSObject new];
+    [[object contextInfo] setObject:@"Test String" forKey:@"saved"];
 
-    NSString *saved = [[object JLT_contextInfo] objectForKey:@"saved"];
+    NSString *saved = [[object contextInfo] objectForKey:@"saved"];
     XCTAssertEqualObjects(saved, @"Test String");
 }
 
 - (void)testContextInfoAsProperty
 {
-    NSObject *object = [[NSObject alloc] init];
-    NSMutableDictionary *contextInfo = object.JLT_contextInfo;
+    NSObject *object = [NSObject new];
+    NSMutableDictionary *contextInfo = object.contextInfo;
     XCTAssertNotNil(contextInfo);
     XCTAssertTrue([contextInfo isKindOfClass:[NSMutableDictionary class]]);
 }
 
 - (void)testContextInfoWithSubscriptedKey
 {
-    NSObject *object = [[NSObject alloc] init];
-    object.JLT_contextInfo[@"saved"] = @"Test String";
-
-    NSString *saved = object.JLT_contextInfo[@"saved"];
-    XCTAssertEqualObjects(saved, @"Test String");
-}
-
-#if defined(JLT_SHORTHAND)
-- (void)testContextInfoShorthandWithSubscriptedKey
-{
-    NSObject *object = [[NSObject alloc] init];
+    NSObject *object = [NSObject new];
     object.contextInfo[@"saved"] = @"Test String";
 
     NSString *saved = object.contextInfo[@"saved"];
     XCTAssertEqualObjects(saved, @"Test String");
 }
-#endif
+
+- (void)testContextInfoWithKeyValueCoding
+{
+    NSObject *object = [NSObject new];
+    object.contextInfo[@"saved"] = @"Test String";
+
+    NSString *saved = [object.contextInfo valueForKey:@"saved"];
+    XCTAssertEqualObjects(saved, @"Test String");
+}
+
+- (void)testContextInfoWithKeyValueCodingKeyPath
+{
+    NSObject *object = [NSObject new];
+    object.contextInfo[@"saved"] = @"Test String";
+
+    NSString *saved = [object valueForKeyPath:@"contextInfo.saved"];
+    XCTAssertEqualObjects(saved, @"Test String");
+}
 
 @end

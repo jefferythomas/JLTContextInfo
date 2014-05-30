@@ -12,5 +12,3 @@
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
 #endif
-
-#define JLT_SHORTHAND

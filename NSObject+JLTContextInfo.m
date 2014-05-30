@@ -17,9 +17,13 @@
 #import "NSObject+JLTContextInfo.h"
 #import "objc/runtime.h"
 
+#if defined(JLT_PREFIX_CATEGORIES)
+#define contextInfo JLT_contextInfo
+#endif
+
 @implementation NSObject (JLTContextInfo)
 
-- (NSMutableDictionary *)JLT_contextInfo
+- (NSMutableDictionary *)contextInfo
 {
 #if defined (JLT_CONTEXT_INFO_ATOMIC)
     @synchronized(self) {
@@ -35,12 +39,5 @@
     }
 #endif
 }
-
-#if defined (JLT_SHORTHAND)
-- (NSMutableDictionary *)contextInfo
-{
-    return self.JLT_contextInfo;
-}
-#endif
 
 @end

@@ -23,25 +23,31 @@
 #import <Foundation/Foundation.h>
 
 @interface NSObject (JLTContextInfo)
+#if !defined(JLT_PREFIX_CATEGORIES)
 
 ///
-/// @brief A mutable dictionary which can contain any additional data an object may need.
+/// @brief A mutable dictionary which can contain any additional data an object
+/// may need.
 ///
-/// By default @c JLT_contextInfo is @c nonatomic. Define @c JLT_CONTEXT_INFO_ATOMIC to make
-/// @c JLT_contextInfo @c atomic.
+/// By default @c contextInfo is @c nonatomic. Define @c JLT_CONTEXT_INFO_ATOMIC
+/// to make @c contextInfo @c atomic.
 ///
-/// Define @c JLT_SHORTHAND to create the property contextInfo.
+/// Define @c JLT_PREFIX_CATEGORIES to rename the property @c JLT_contextInfo.
+///
+@property (JLT_CONTEXT_INFO___ATOMIC___, readonly) NSMutableDictionary *contextInfo;
+
+#else
+
+///
+/// @brief A mutable dictionary which can contain any additional data an object
+/// may need.
+///
+/// By default @c JLT_contextInfo is @c nonatomic. Define
+/// @c JLT_CONTEXT_INFO_ATOMIC to make @c JLT_contextInfo @c atomic.
+///
+/// Undefine @c JLT_PREFIX_CATEGORIES to rename the property @c contextInfo.
 ///
 @property (JLT_CONTEXT_INFO___ATOMIC___, readonly) NSMutableDictionary *JLT_contextInfo;
 
-#if defined (JLT_SHORTHAND)
-///
-/// @brief A mutable dictionary which can contain any additional data an object may need.
-///
-/// This is a shorthand alias for @c JLT_contextInfo. Either property will return the same
-/// dictionary.
-///
-@property (JLT_CONTEXT_INFO___ATOMIC___, readonly) NSMutableDictionary *contextInfo;
 #endif
-
 @end
