@@ -21,11 +21,14 @@
 
 - (IBAction)buttonTextToMagic:(UIButton *)button
 {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Make Magic"
                                                         message:@"Make the button title \"Magic!\"?"
                                                        delegate:self
                                               cancelButtonTitle:@"NO"
                                               otherButtonTitles:@"YES", nil];
+#pragma GCC diagnostic pop
 
     alertView.contextInfo[@"button"] = button;
     [alertView show];
@@ -33,14 +36,19 @@
 
 - (IBAction)connectToGoogle:(UIButton *)button
 {
-    NSURL *URL = [NSURL URLWithString:@"http://google.com/"];
+    NSURL *URL = [NSURL URLWithString:@"https://google.com/"];
     NSURLRequest *request = [NSURLRequest requestWithURL:URL];
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
     NSURLConnection *connection = [NSURLConnection connectionWithRequest:request delegate:self];
+#pragma GCC diagnostic pop
     connection.contextInfo[@"button"] = button;
 }
 
 #pragma mark UIAlertViewDelegate
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (alertView.contextInfo[@"button"] != nil) {
@@ -50,6 +58,7 @@
         }
     }
 }
+#pragma GCC diagnostic pop
 
 #pragma mark NSURLConnectionDataDelegate
 
